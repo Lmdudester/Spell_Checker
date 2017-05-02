@@ -7,6 +7,13 @@ import java.util.StringTokenizer;
 
 public class Checker {
 
+	/**
+	 * Creates a Dictionary object and populates it with words from a given Dictionary (.txt) file
+	 * 
+	 * @param fName The name of the file being read (and therefore the language of the Dictionary)
+	 * @param fr The FileReader object to be read from (the Dictionary)
+	 * @return A Dictionary object containing every valid word in the file
+	 */
 	private static Dictionary makeDictionary(String fName, FileReader fr){
 		Dictionary lang = new Dictionary(fName);
 		BufferedReader bufRdr = new BufferedReader(fr);
@@ -40,6 +47,13 @@ public class Checker {
 		return lang;
 	}
 	
+	/**
+	 * Creates a string containing the line and word number of each misspelled word in the document.
+	 * 
+	 * @param lang The Dictionary object being used to spell check the document
+	 * @param fr The FileReader object to be read from (the Document)
+	 * @return A String containing the line and word number of each misspelled word in the Document
+	 */
 	private static String spellCheckDocument(Dictionary lang, FileReader fr){
 		StringBuilder retStr = new StringBuilder();
 		
@@ -95,11 +109,11 @@ public class Checker {
 		FileReader fr = null;
 		String fName;
 		
-		do{
+		do{ //Obtain a valid language from the user
 			System.out.print("Please enter a Language: ");
 			fName = input.nextLine();
 			
-			try{
+			try{ //Try to open the respective language file
 				fr = new FileReader(fName.toLowerCase() + ".txt");
 			} catch(FileNotFoundException e){
 				fr = null;
@@ -107,27 +121,29 @@ public class Checker {
 			}
 		}while(fr == null);
 		
-		Dictionary lang = makeDictionary(fName, fr);
+		Dictionary lang = makeDictionary(fName, fr); //Create and populate the dictionary
 		
-		do{
-		
-			do{
+		do{ //Keep in a loop until user types "exit"
+			
+			do{ //Keep in a loop while file path in invalid
+				
 				System.out.print("Please enter a path of a simple text document to spell check (or \"exit\" to exit): ");
 				fName = input.nextLine();
 			
-				if("exit".equals(fName.toLowerCase())){
+				if("exit".equals(fName.toLowerCase())){ //Exit upon "exit"
 					input.close();
 					return;
 				}
 				
-				try{
+				try{ //Try to open the file
 					fr = new FileReader(new File(fName));
 				} catch(FileNotFoundException e){
 					fr = null;
-					System.out.println("File not found, please try again.");
+					System.out.println("File not found, please try again.\n");
 				}
 			}while(fr == null);
 			
+			//Spell check the given file
 			System.out.println("\nSpell Check for "+ fName + ":\n" + spellCheckDocument(lang,fr));
 	
 		}while(true);
