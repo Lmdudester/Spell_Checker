@@ -1,9 +1,13 @@
 package apps;
 
-import structures.*;
-import java.io.*;
+import structures.Dictionary;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Checker {
 
@@ -127,7 +131,7 @@ public class Checker {
 			
 			do{ //Keep in a loop while file path in invalid
 				
-				System.out.print("Please enter a path of a simple text document to spell check (or \"exit\" to exit): ");
+				System.out.print("Please enter a path of a simple text document to spell check (or \"Exit\" to exit): ");
 				fName = input.nextLine();
 			
 				if("exit".equals(fName.toLowerCase())){ //Exit upon "exit"
